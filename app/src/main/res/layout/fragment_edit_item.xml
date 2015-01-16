@@ -6,16 +6,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.codepath.todoapp.activities.EditItemActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/edit_text_label"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +18,7 @@
         android:ems="10"
         android:id="@+id/etEditNotes"
         android:lines="2"
+        android:layout_below="@id/etEditTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -44,7 +35,7 @@
         android:layout_alignParentStart="true" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spEditPriority"
         android:layout_below="@id/tvEditPriority"
@@ -60,23 +51,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dpEditDueDate"
+        android:id="@+id/tvEditDate"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
         android:layout_below="@id/tvEditDueDate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:calendarViewShown="false" />
+        android:layout_alignParentStart="false"
+        android:layout_alignRight="@+id/spEditPriority"
+        android:layout_alignEnd="@+id/spEditPriority" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_save_label"
         android:id="@+id/btnSave"
-        android:layout_below="@id/dpEditDueDate"
+        android:layout_below="@id/tvEditDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="18dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_cancel_label"
+        android:id="@+id/btnCancel"
+        android:layout_alignTop="@+id/btnSave"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
