@@ -43,16 +43,16 @@ public class TodoAdapter extends ArrayAdapter<TodoItem> {
         String priority = todoItem.getPriority();
         switch (priority) {
             case "High":
-                viewHolder.icon.setImageResource(R.drawable.high48);
+                viewHolder.icon.setImageResource(R.drawable.high32);
                 break;
             case "Default":
-                viewHolder.icon.setImageResource(R.drawable.default48);
+                viewHolder.icon.setImageResource(R.drawable.default32);
                 break;
             case "Low":
-                viewHolder.icon.setImageResource(R.drawable.low48);
+                viewHolder.icon.setImageResource(R.drawable.low32);
                 break;
             default:
-                viewHolder.icon.setImageResource(R.drawable.unset48);
+                viewHolder.icon.setImageResource(R.drawable.unset32);
         }
 
         viewHolder.title.setText(todoItem.getTitle());

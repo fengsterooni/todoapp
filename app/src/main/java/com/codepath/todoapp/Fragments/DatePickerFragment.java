@@ -5,13 +5,22 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.text.TextUtils;
+
+import com.codepath.todoapp.utils.DateUtils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment {
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
-    public DatePickerFragment() {
+    public static DatePickerFragment newInstance(String dateString) {
+        DatePickerFragment fragment = new DatePickerFragment();
+        Bundle args = new Bundle();
+        args.putString("date", dateString);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -28,6 +37,12 @@ public class DatePickerFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar calendar = Calendar.getInstance();
+        String dateString = getArguments().getString("date", "");
+        if (!TextUtils.isEmpty(dateString)) {
+            Date date = DateUtils.getDateFromString(dateString);
+            calendar.setTime(date);
+        }
+
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);

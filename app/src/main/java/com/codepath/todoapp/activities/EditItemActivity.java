@@ -142,7 +142,7 @@ public class EditItemActivity extends ActionBarActivity
 
     public void showDatePickerDialog(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        DialogFragment dialogFragment = new DatePickerFragment();
+        DialogFragment dialogFragment = DatePickerFragment.newInstance(DateUtils.getDateString(itemDate));
         dialogFragment.show(ft, "date_dialog");
     }
 

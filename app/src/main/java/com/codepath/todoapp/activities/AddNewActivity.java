@@ -119,7 +119,7 @@ public class AddNewActivity extends ActionBarActivity
 
     public void showDatePickerDialog(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        DialogFragment dialogFragment = new DatePickerFragment();
+        DialogFragment dialogFragment = DatePickerFragment.newInstance("");
         dialogFragment.show(ft, "date_dialog");
     }
 
