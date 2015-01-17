@@ -31,6 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/indigo"
         android:text="@string/label_add_priority"
         android:id="@+id/tvAddPriority"
         android:layout_below="@+id/etAddNotes"
@@ -50,6 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/indigo"
         android:text="@string/label_add_due_date"
         android:id="@+id/tvAddDueDate"
         android:layout_below="@+id/spAddPriority"
