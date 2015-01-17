@@ -32,6 +32,12 @@ public class DatePickerFragment extends DialogFragment {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        return new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
+
+        // Disable past time
+        // http://stackoverflow.com/questions/23762231/how-to-disable-past-dates-in-android-date-picker
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        return datePickerDialog;
     }
 }

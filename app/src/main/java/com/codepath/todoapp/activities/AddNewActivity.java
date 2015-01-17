@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,7 @@ public class AddNewActivity extends ActionBarActivity
     private EditText etNotes;
     private Spinner priority;
     private TextView tvDate;
-    private Date itemDate;
+    private Date itemDate = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class AddNewActivity extends ActionBarActivity
         etTitle = (EditText) findViewById(R.id.etAddTitle);
         etNotes = (EditText) findViewById(R.id.etAddNotes);
         priority = (Spinner) findViewById(R.id.spAddPriority);
-        //priority.setSelection(TodoItem.Priority.DEFAULT);
         tvDate = (TextView) findViewById(R.id.tvAddDate);
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +52,7 @@ public class AddNewActivity extends ActionBarActivity
         });
 
         populateSpinner();
+        priority.setSelection(1);
     }
 
     private void populateSpinner() {
@@ -94,7 +93,7 @@ public class AddNewActivity extends ActionBarActivity
         TodoItem todoItem = new TodoItem();
         String title = etTitle.getText().toString();
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(AddNewActivity.this, "Please add a title!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please add a title!", Toast.LENGTH_SHORT).show();
             return null;
         } else {
             todoItem.setTitle(title);
@@ -105,11 +104,15 @@ public class AddNewActivity extends ActionBarActivity
             todoItem.setNotes(notes);
         }
 
-        Log.i("INFO", "PRIORITY: " + priority.getSelectedItem());
         String pri = priority.getSelectedItem().toString();
         todoItem.setPriority(pri);
 
-        todoItem.setDueDate(itemDate);
+        if (itemDate == null) {
+            Toast.makeText(this, "Please set a due date", Toast.LENGTH_SHORT).show();
+            return null;
+        } else {
+            todoItem.setDueDate(itemDate);
+        }
 
         return todoItem;
     }
@@ -126,6 +129,4 @@ public class AddNewActivity extends ActionBarActivity
         itemDate = calendar.getTime();
         tvDate.setText(DateUtils.getDateString(itemDate));
     }
-
-
 }

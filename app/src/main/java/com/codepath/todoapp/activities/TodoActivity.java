@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.codepath.todoapp.R;
+import com.codepath.todoapp.database.TodoItemDatabase;
 import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.models.TodoItem;
 
@@ -25,19 +26,24 @@ public class TodoActivity extends ActionBarActivity {
     private ListView lvItems;
     private static final int ITEM_EDIT_REQUEST = 1;
     private static final int ITEM_ADD_REQUEST = 2;
+    private TodoItemDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
-        lvItems = (ListView) findViewById(R.id.lvItem);
-        //readItems();
-        todoItems = new ArrayList<>();
+        // Initialize the Database
+        db = new TodoItemDatabase(this);
+
+        // Read the TodoItem from the Database
+        todoItems = db.getAllTodoItems();
         todoAdapter = new TodoAdapter(this, todoItems);
 
-        //Adapter<TodoItem>(this, android.R.layout.simple_list_item_1, todoItems);
+        // Inflate the ListView
+        lvItems = (ListView) findViewById(R.id.lvItem);
         lvItems.setAdapter(todoAdapter);
+
         setupListViewListener();
     }
 
@@ -63,9 +69,12 @@ public class TodoActivity extends ActionBarActivity {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TodoItem todoItem = todoItems.get(position);
                 todoItems.remove(position);
                 todoAdapter.notifyDataSetChanged();
-                //writeItems();
+
+                // Update the Database
+                db.deleteTodoItem(todoItem);
                 return true;
             }
         });
@@ -82,54 +91,25 @@ public class TodoActivity extends ActionBarActivity {
         });
     }
 
-    /*
-    public void onAddedItem(View view) {
-        String itemText = etNewItem.getText().toString();
-        todoAdapter.add(itemText);
-        etNewItem.setText("");
-        writeItems();
-    }
-
-
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-
-        try {
-            todoItems = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            todoItems = new ArrayList<String>();
-        }
-    }
-
-    private void writeItems() {
-        File fileDir = getFilesDir();
-        File todoFile = new File(fileDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, todoItems);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+
             if (requestCode == ITEM_EDIT_REQUEST) {
                 int position = data.getIntExtra("position", 0);
                 TodoItem todoItem = data.getParcelableExtra("item");
                 todoItems.set(position, todoItem);
                 todoAdapter.notifyDataSetChanged();
-                //writeItems();
+                db.updateTodoItem(todoItem);
             }
 
             if (requestCode == ITEM_ADD_REQUEST) {
                 TodoItem todoItem = data.getParcelableExtra("item");
-                todoItems.add(todoItem);
+                db.addTodoItem(todoItem);
+                todoItems.clear();
+                todoItems.addAll(db.getAllTodoItems());
                 todoAdapter.notifyDataSetChanged();
             }
         }
-
     }
 }

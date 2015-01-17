@@ -1,5 +1,6 @@
 package com.codepath.todoapp.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,5 +63,16 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static Date getDateFromString(String string) {
+        Date date = null;
+        SimpleDateFormat MMMddyyyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+        try {
+            date = MMMddyyyyFormat.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

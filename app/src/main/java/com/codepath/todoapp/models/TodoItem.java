@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class TodoItem implements Parcelable {
+    private int id;
     private String title;
     private String notes;
     private Date dueDate;
@@ -24,6 +25,14 @@ public class TodoItem implements Parcelable {
         public String toString() {
             return value;
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -69,12 +78,24 @@ public class TodoItem implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "TodoItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", notes='" + notes + '\'' +
+                ", dueDate=" + dueDate +
+                ", priority='" + priority + '\'' +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.notes);
         dest.writeLong(dueDate != null ? dueDate.getTime() : -1);
@@ -82,6 +103,7 @@ public class TodoItem implements Parcelable {
     }
 
     private TodoItem(Parcel in) {
+        this.id = in.readInt();
         this.title = in.readString();
         this.notes = in.readString();
         long tmpDueDate = in.readLong();

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +58,6 @@ public class EditItemActivity extends ActionBarActivity
         });
 
         populateSpinner();
-
         updateUI();
     }
 
@@ -99,10 +97,9 @@ public class EditItemActivity extends ActionBarActivity
         }
     }
 
-
     private void updateUI() {
         if (todoItem == null) {
-            Toast.makeText(EditItemActivity.this, "There is something wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "There is something wrong!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -121,7 +118,7 @@ public class EditItemActivity extends ActionBarActivity
     }
 
     private TodoItem prepareTodoItem() {
-
+        // Title
         String title = etTitle.getText().toString();
         if (TextUtils.isEmpty(title)) {
             Toast.makeText(EditItemActivity.this, "Please add a title!", Toast.LENGTH_SHORT).show();
@@ -129,16 +126,15 @@ public class EditItemActivity extends ActionBarActivity
         } else {
             todoItem.setTitle(title);
         }
-
+        // Notes
         String notes = etNotes.getText().toString();
         if (!TextUtils.isEmpty(notes)) {
             todoItem.setNotes(notes);
         }
-
+        // Priority
         String pri = priority.getSelectedItem().toString();
-        Log.i("INFO", "PRIORITY: " + priority.getSelectedItem());
         todoItem.setPriority(pri);
-
+        // Date
         todoItem.setDueDate(itemDate);
 
         return todoItem;
@@ -164,7 +160,6 @@ public class EditItemActivity extends ActionBarActivity
                 index = i;
             }
         }
-
         return index;
     }
 }

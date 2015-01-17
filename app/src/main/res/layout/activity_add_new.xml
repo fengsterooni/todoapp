@@ -36,6 +36,7 @@
         android:layout_below="@+id/etAddNotes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:paddingTop="20dp"
         android:textSize="@dimen/abc_text_size_medium_material" />
 
     <Spinner
@@ -43,8 +44,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/spAddPriority"
         android:layout_below="@+id/tvAddPriority"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toRightOf="@+id/tvAddPriority"
+        android:layout_toEndOf="@+id/tvAddPriority" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,6 +55,7 @@
         android:layout_below="@+id/spAddPriority"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:paddingTop="20dp"
         android:textSize="@dimen/abc_text_size_medium_material" />
 
     <TextView
@@ -63,9 +65,9 @@
         android:id="@+id/tvAddDate"
         style="@android:style/Widget.DeviceDefault.Light.Spinner"
         android:layout_below="@+id/tvAddDueDate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
         android:layout_alignRight="@+id/spAddPriority"
-        android:layout_alignEnd="@+id/spAddPriority" />
+        android:layout_alignEnd="@+id/spAddPriority"
+        android:layout_alignLeft="@+id/spAddPriority"
+        android:layout_alignStart="@+id/spAddPriority" />
 
 </RelativeLayout>
