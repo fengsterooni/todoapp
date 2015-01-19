@@ -27,3 +27,6 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [ ] User preferences. User shall be able to hide lower priority items
 - [ ] Notification. User shall be able to set (in perference) whether she should be notified, if so how and how much time ahead when due date is approaching.
 
+**_Screencast:_**
+
+![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp.gif)
