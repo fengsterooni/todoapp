@@ -56,14 +56,13 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         return todoItems.size();
     }
 
-    public static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public static final class ViewHolder extends RecyclerView.ViewHolder {
         private final View parent;
         private final ImageView icon;
         private final TextView title;
         private final TextView notes;
         private final TextView dueMonth;
         private final TextView dueDay;
-        private ItemClickListener itemClickListener;
 
         public static ViewHolder newInstance(View parent) {
             ImageView icon = (ImageView) parent.findViewById(R.id.ivItemPriority);
@@ -71,8 +70,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             TextView notes = (TextView) parent.findViewById(R.id.tvItemNotes);
             TextView dueMonth = (TextView) parent.findViewById(R.id.tvItemDueMonth);
             TextView dueDay = (TextView) parent.findViewById(R.id.tvItemDueDay);
-            parent.setOnClickListener(this);
-            parent.setOnLongClickListener(this);
 
             return new ViewHolder(parent, icon, title, notes, dueMonth, dueDay);
         }
@@ -124,10 +121,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     }
 
     public interface ItemClickListener {
-        public void itemClicked(TodoItem todoItem, View view, int position, boolean isLongClick);
-
-        public void setItemClickListener(ItemClickListener clickListener) {
-            this.c
-        }
+        public void itemClicked(TodoItem todoItem);
     }
 }
