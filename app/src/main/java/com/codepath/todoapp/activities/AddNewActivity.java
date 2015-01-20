@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codepath.todoapp.Fragments.DatePickerFragment;
+import com.codepath.todoapp.fragments.DatePickerFragment;
 import com.codepath.todoapp.R;
 import com.codepath.todoapp.models.TodoItem;
 import com.codepath.todoapp.utils.DateUtils;
@@ -34,12 +34,14 @@ public class AddNewActivity extends ActionBarActivity
     private Spinner priority;
     private TextView tvDate;
     private Date itemDate = null;
+    private TodoItem todoItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new);
 
+        todoItem = new TodoItem();
         etTitle = (EditText) findViewById(R.id.etAddTitle);
         etNotes = (EditText) findViewById(R.id.etAddNotes);
         priority = (Spinner) findViewById(R.id.spAddPriority);
@@ -90,7 +92,6 @@ public class AddNewActivity extends ActionBarActivity
     }
 
     private TodoItem prepareTodoItem() {
-        TodoItem todoItem = new TodoItem();
         String title = etTitle.getText().toString();
         if (TextUtils.isEmpty(title)) {
             Toast.makeText(this, "Please add a title!", Toast.LENGTH_SHORT).show();

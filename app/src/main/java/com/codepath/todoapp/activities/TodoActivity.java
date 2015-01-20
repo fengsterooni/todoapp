@@ -72,7 +72,7 @@ public class TodoActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                Intent intent = new Intent(this, AddNewActivity.class);
+                Intent intent = new Intent(this, TodoItemActivity.class);
                 startActivityForResult(intent, ITEM_ADD_REQUEST);
                 return true;
             default:
@@ -116,7 +116,7 @@ public class TodoActivity extends ActionBarActivity
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
             int position = recyclerView.getChildPosition(view);
             TodoItem todoItem = todoItems.get(position);
-            Intent intent = new Intent(TodoActivity.this, EditItemActivity.class);
+            Intent intent = new Intent(TodoActivity.this, TodoItemActivity.class);
             intent.putExtra("item", todoItem);
             intent.putExtra("position", position);
             startActivityForResult(intent, ITEM_EDIT_REQUEST);

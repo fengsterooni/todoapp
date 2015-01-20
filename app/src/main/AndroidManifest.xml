@@ -24,6 +24,9 @@
             android:name=".activities.AddNewActivity"
             android:label="@string/title_activity_add_new" >
         </activity>
+        <activity
+            android:name=".activities.TodoItemActivity" >
+        </activity>
     </application>
 
 </manifest>

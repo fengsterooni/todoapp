@@ -1,4 +1,4 @@
-package com.codepath.todoapp.Fragments;
+package com.codepath.todoapp.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

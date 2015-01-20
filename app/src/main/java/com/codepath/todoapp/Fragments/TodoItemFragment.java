@@ -1,11 +1,17 @@
 package com.codepath.todoapp.fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -23,28 +29,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class EditDialog extends DialogFragment
+public class TodoItemFragment extends Fragment
         implements DatePickerDialog.OnDateSetListener{
     private TodoItem todoItem;
+    private int position;
     private EditText etTitle;
     private EditText etNotes;
     private Spinner priority;
     private TextView tvDate;
     private Date itemDate;
 
-    public EditDialog() {
+    public TodoItemFragment() {
     }
 
-    public static EditDialog newInstance(TodoItem todo) {
-        EditDialog frag = new EditDialog();
+    public static TodoItemFragment newInstance(TodoItem todo, int position) {
+        TodoItemFragment fragment = new TodoItemFragment();
         Bundle args = null;
         if (todo != null) {
             args = new Bundle();
             args.putParcelable("item", todo);
+            args.putInt("position", position);
         }
 
-        frag.setArguments(args);
-        return frag;
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -52,14 +60,16 @@ public class EditDialog extends DialogFragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             todoItem = getArguments().getParcelable("item");
+            position = getArguments().getInt("position");
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_edit_item, container);
+        View view = inflater.inflate(R.layout.fragment_edit_item, container, false);
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etNotes = (EditText) view.findViewById(R.id.etNotes);
         priority = (Spinner) view.findViewById(R.id.spPriority);
@@ -72,10 +82,10 @@ public class EditDialog extends DialogFragment
         });
 
         if (todoItem != null) {
-            getDialog().setTitle("Edit Item");
+            getActivity().setTitle("Edit Item");
             updateUI();
         } else {
-            getDialog().setTitle("Add New");
+            getActivity().setTitle("Add New");
             todoItem = new TodoItem();
         }
 
@@ -133,10 +143,10 @@ public class EditDialog extends DialogFragment
     public void showDatePickerDialog(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         DialogFragment dialogFragment = DatePickerFragment.newInstance("");
-        dialogFragment.show(ft, "date_dialog");
+        //dialogFragment.show(getFragmentManager(), "date_dialog");
+        ft.replace(android.R.id.content, dialogFragment, "date_dialog").commit();
     }
 
-    @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
         itemDate = calendar.getTime();
@@ -158,5 +168,35 @@ public class EditDialog extends DialogFragment
         ArrayAdapter<CharSequence> aAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.todo_priority, android.R.layout.simple_spinner_item);
         aAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         priority.setAdapter(aAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_todoitem, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Activity activity = getActivity();
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                TodoItem todoItem = prepareTodoItem();
+                if (todoItem != null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("item", todoItem);
+                    intent.putExtra("position", position);
+                    activity.setResult(Activity.RESULT_OK, intent);
+                    activity.finish();
+                }
+                return true;
+            case R.id.action_cancel:
+                Intent intent = new Intent();
+                activity.setResult(Activity.RESULT_CANCELED, intent);
+                activity.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
