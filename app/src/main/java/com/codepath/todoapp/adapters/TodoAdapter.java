@@ -1,7 +1,6 @@
 package com.codepath.todoapp.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,9 @@ import java.util.List;
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private List<TodoItem> todoItems;
-    private ItemClickListener itemClickListener;
 
-    public TodoAdapter(List<TodoItem> objects, @NonNull ItemClickListener itemClickListener) {
+    public TodoAdapter(List<TodoItem> objects) {
         this.todoItems = objects;
-        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -42,14 +39,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         Date date = todoItem.getDueDate();
         viewHolder.setDueMonth(DateUtils.getMonthString(date));
         viewHolder.setDueDay(DateUtils.getDayString(date));
-        viewHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClickListener.itemClicked(todoItem);
-            }
-        });
     }
-
 
     @Override
     public int getItemCount() {
@@ -75,7 +65,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
 
         private ViewHolder(View parent, ImageView icon,
-                TextView title, TextView notes, TextView dueMonth, TextView dueDay) {
+                           TextView title, TextView notes, TextView dueMonth, TextView dueDay) {
             super(parent);
             this.parent = parent;
             this.icon = icon;
@@ -102,25 +92,21 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             }
             icon.setImageResource(imageId);
         }
+
         public void setTitle(CharSequence text) {
             title.setText(text);
         }
+
         public void setNotes(CharSequence text) {
             notes.setText(text);
         }
+
         public void setDueMonth(CharSequence text) {
             dueMonth.setText(text);
         }
+
         public void setDueDay(CharSequence text) {
             dueDay.setText(text);
         }
-
-        public void setOnClickListener(View.OnClickListener listener) {
-            parent.setOnClickListener(listener);
-        }
-    }
-
-    public interface ItemClickListener {
-        public void itemClicked(TodoItem todoItem);
     }
 }
