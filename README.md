@@ -16,9 +16,9 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [x] Optional: Display additional attributes, stylize the items in item ListView
 - [x] Optional: Improved UI by using some simple Material design (need more work!)
 - [x] Replace the ListView by RecyclerView
+- [x] Consolidate the code for adding new item and editing existing items, code reuse!
 
 **_Work-in-progress:_**
-- [ ] Consolidate the code for adding new item and editing existing items, code reuse!
 - [ ] Use fragment inside activities
 - [ ] Optional: Use a DialogFragment instead of new Activity to support editing items. Making the editing screen a dialog fragment is doable, need to find a way to make the fragment communicate with the date picker fragment for smooth transition.
 
@@ -28,5 +28,4 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [ ] Notification. User shall be able to set (in perference) whether she should be notified, if so how and how much time ahead when due date is approaching.
 
 **_Screencast:_**
-
 ![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp.gif)
