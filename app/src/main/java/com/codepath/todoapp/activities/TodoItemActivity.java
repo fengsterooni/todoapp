@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 
 public class TodoItemActivity extends ActionBarActivity
         implements DatePickerDialog.OnDateSetListener {
+    private final int DEFAULT_PRIORITY = 1;
 
     private TodoItem todoItem;
     private int position;
@@ -57,15 +58,16 @@ public class TodoItemActivity extends ActionBarActivity
             }
         });
 
+        populateSpinner();
+
         if (todoItem != null) {
             setTitle("Edit Item");
             updateUI();
         } else {
             setTitle("Add New");
             todoItem = new TodoItem();
+            priority.setSelection(DEFAULT_PRIORITY);
         }
-
-        populateSpinner();
     }
 
     private void updateUI() {
