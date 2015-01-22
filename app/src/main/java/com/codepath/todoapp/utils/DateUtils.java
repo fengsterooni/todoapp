@@ -75,4 +75,10 @@ public class DateUtils {
         }
         return date;
     }
+
+    public static long getDateLong(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getTimeInMillis();
+    }
 }

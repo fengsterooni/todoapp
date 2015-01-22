@@ -10,6 +10,7 @@ import com.codepath.todoapp.models.TodoItem;
 import com.codepath.todoapp.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TodoItemDatabase extends SQLiteOpenHelper {
 
@@ -45,7 +46,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
                 + KEY_TITLE + " TEXT,"
                 + KEY_NOTE + " TEXT,"
                 + KEY_PRIORITY + " TEXT,"
-                + KEY_DATE + " TEXT"
+                + KEY_DATE + " INTEGER"
                 + ")";
         db.execSQL(CREATE_TODO_TABLE);
     }
@@ -72,7 +73,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         values.put(KEY_TITLE, item.getTitle());
         values.put(KEY_NOTE, item.getNotes());
         values.put(KEY_PRIORITY, item.getPriority());
-        values.put(KEY_DATE, DateUtils.getDateString(item.getDueDate()));
+        values.put(KEY_DATE, DateUtils.getDateLong(item.getDueDate()));
         // Insert Row
         db.insert(TABLE_TODO, null, values);
         db.close(); // Closing database connection
@@ -91,7 +92,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
             cursor.moveToFirst();
         // Load result into model object
         TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                DateUtils.getDateFromString(cursor.getString(4)));
+                new Date(cursor.getLong(4)));
         item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
         // return todo item
         return item;
@@ -109,7 +110,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                        DateUtils.getDateFromString(cursor.getString(4)));
+                        new Date(cursor.getLong(4)));
 
                 item.setId(cursor.getInt(0));
                 // Adding todo item to list
@@ -139,7 +140,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         values.put(KEY_TITLE, item.getTitle());
         values.put(KEY_NOTE, item.getNotes());
         values.put(KEY_PRIORITY, item.getPriority());
-        values.put(KEY_DATE, DateUtils.getDateString(item.getDueDate()));
+        values.put(KEY_DATE, DateUtils.getDateLong(item.getDueDate()));
         // Updating row
         int result = db.update(TABLE_TODO, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(item.getId()) });

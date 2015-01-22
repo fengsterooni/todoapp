@@ -119,9 +119,11 @@ public class TodoItemActivity extends ActionBarActivity
 
     public void showDatePickerDialog(View v) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        DialogFragment dialogFragment = DatePickerFragment.newInstance("");
+        String dateString = "";
+        if (itemDate != null)
+            dateString = DateUtils.getDateString(itemDate);
+        DialogFragment dialogFragment = DatePickerFragment.newInstance(dateString);
         dialogFragment.show(getFragmentManager(), "date_dialog");
-        //ft.replace(android.R.id.content, dialogFragment, "date_dialog").commit();
     }
 
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

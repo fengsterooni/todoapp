@@ -115,6 +115,7 @@ public class TodoActivity extends ActionBarActivity
         public boolean onSingleTapConfirmed(MotionEvent e) {
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
             int position = recyclerView.getChildPosition(view);
+            if (position < 0) return false;
             TodoItem todoItem = todoItems.get(position);
             Intent intent = new Intent(TodoActivity.this, TodoItemActivity.class);
             intent.putExtra("item", todoItem);
@@ -127,6 +128,7 @@ public class TodoActivity extends ActionBarActivity
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             View view = recyclerView.findChildViewUnder(e1.getX(), e1.getY());
             int position = recyclerView.getChildPosition(view);
+            if (position < 0) return false;
             TodoItem todoItem = todoItems.get(position);
             todoItems.remove(position);
             todoAdapter.notifyDataSetChanged();
@@ -140,6 +142,7 @@ public class TodoActivity extends ActionBarActivity
         public void onLongPress(MotionEvent e) {
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
             int position = recyclerView.getChildPosition(view);
+            if (position < 0) return;
             TodoItem todoItem = todoItems.get(position);
             todoItems.remove(position);
             todoAdapter.notifyDataSetChanged();
