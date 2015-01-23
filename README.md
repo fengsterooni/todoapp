@@ -17,10 +17,10 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [x] Optional: Improved UI by using some simple Material design (need more work!)
 - [x] Replace the ListView by RecyclerView
 - [x] Consolidate the code for adding new item and editing existing items, code reuse!
+- [x] Use fragment. 
 
 **_Work-in-progress:_**
-- [ ] Use fragment inside activities
-- [ ] Optional: Use a DialogFragment instead of new Activity to support editing items. Making the editing screen a dialog fragment is doable, need to find a way to make the fragment communicate with the date picker fragment for smooth transition.
+- [ ] Optional: Use a DialogFragment instead of new Activity to support editing items. 
 
 **_Further improvements:_**
 - [ ] Sort. User shall be able to sort items by date or priority
