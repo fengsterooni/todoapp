@@ -94,8 +94,10 @@ public class TodoActivity extends ActionBarActivity
                 int position = data.getIntExtra("position", 0);
                 TodoItem todoItem = data.getParcelableExtra("item");
                 todoItems.set(position, todoItem);
-                todoAdapter.notifyDataSetChanged();
                 db.updateTodoItem(todoItem);
+                todoItems.clear();
+                todoItems.addAll(db.getAllTodoItems());
+                todoAdapter.notifyDataSetChanged();
             }
 
             if (requestCode == ITEM_ADD_REQUEST) {

@@ -33,7 +33,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         final TodoItem todoItem = todoItems.get(position);
-        viewHolder.setIcon(todoItem.getPriority());
+        viewHolder.setIcon(todoItem.getPriority().toString());
         viewHolder.setTitle(todoItem.getTitle());
         viewHolder.setNotes(todoItem.getNotes());
         Date date = todoItem.getDueDate();

@@ -2,6 +2,7 @@ package com.codepath.todoapp.fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +33,13 @@ public class TodoItemFragment extends Fragment {
     private int position;
     private EditText etTitle;
     private EditText etNotes;
-    private Spinner priority;
+    private Spinner spPriority;
     private TextView tvDate;
     private Date itemDate;
     private Activity activity;
+    //private String[] string_priority;
+    private int icon_priority[] = { R.drawable.high32,
+            R.drawable.default32, R.drawable.low32};
 
     private OnDatePickerClickedListener listener;
 
@@ -70,6 +75,8 @@ public class TodoItemFragment extends Fragment {
         position = getArguments().getInt("position");
         activity = getActivity();
         setHasOptionsMenu(true);
+
+        //string_priority = getResources().getStringArray(R.array.todo_priority);
     }
 
     @Override
@@ -80,7 +87,7 @@ public class TodoItemFragment extends Fragment {
 
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etNotes = (EditText) view.findViewById(R.id.etNotes);
-        priority = (Spinner) view.findViewById(R.id.spPriority);
+        spPriority = (Spinner) view.findViewById(R.id.spPriority);
         tvDate = (TextView) view.findViewById(R.id.tvDate);
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +104,7 @@ public class TodoItemFragment extends Fragment {
         } else {
             activity.setTitle("Add New");
             todoItem = new TodoItem();
-            priority.setSelection(DEFAULT_PRIORITY);
+            spPriority.setSelection(DEFAULT_PRIORITY);
         }
 
         return view;
@@ -114,8 +121,7 @@ public class TodoItemFragment extends Fragment {
         if (!TextUtils.isEmpty(notes))
             etNotes.setText(notes);
 
-        String pri = todoItem.getPriority();
-        priority.setSelection(getIndex(priority, pri));
+        spPriority.setSelection(todoItem.getPriorityValue());
 
         itemDate = todoItem.getDueDate();
         String date = DateUtils.getDateString(itemDate);
@@ -137,8 +143,9 @@ public class TodoItemFragment extends Fragment {
             todoItem.setNotes(notes);
         }
 
-        String pri = priority.getSelectedItem().toString();
-        todoItem.setPriority(pri);
+        int index = spPriority.getSelectedItemPosition();
+        todoItem.setPriority(TodoItem.Priority.values()[index]);
+
 
         if (itemDate == null) {
             Toast.makeText(activity, "Please set a due date", Toast.LENGTH_SHORT).show();
@@ -150,22 +157,10 @@ public class TodoItemFragment extends Fragment {
         return todoItem;
     }
 
-
-    private int getIndex(Spinner spinner, String string) {
-        int index = 0;
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).equals(string)) {
-                index = i;
-            }
-        }
-
-        return index;
-    }
-
     private void populateSpinner() {
-        ArrayAdapter<CharSequence> aAdapter = ArrayAdapter.createFromResource(activity, R.array.todo_priority, android.R.layout.simple_spinner_item);
+        ArrayAdapter<TodoItem.Priority> aAdapter = new MySpinnerAdapter(getActivity(), TodoItem.Priority.values());
         aAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        priority.setAdapter(aAdapter);
+        spPriority.setAdapter(aAdapter);
     }
 
     @Override
@@ -208,5 +203,36 @@ public class TodoItemFragment extends Fragment {
 
     public interface OnDatePickerClickedListener {
         public void onDatePickerClicked(View view);
+    }
+
+    public class MySpinnerAdapter extends ArrayAdapter<TodoItem.Priority> {
+
+
+        public MySpinnerAdapter(Context context, TodoItem.Priority[] objects) {
+            super(context, R.layout.priority_item, objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater=getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.priority_item, parent, false);
+            TextView label = (TextView)view.findViewById(R.id.tvPriority);
+            label.setText(TodoItem.Priority.values()[position].toString());
+
+            ImageView icon=(ImageView)view.findViewById(R.id.ivPriority);
+            icon.setImageResource(icon_priority[position]);
+
+            return view;
+        }
     }
 }

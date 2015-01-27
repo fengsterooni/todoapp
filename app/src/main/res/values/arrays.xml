@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="todo_priority">
-        <item>High</item>
-        <item>Default</item>
-        <item>Low</item>
-    </string-array>
-</resources>

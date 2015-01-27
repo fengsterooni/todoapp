@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ivItemPriority"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/unset32" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
 
-    <TextView
-        android:id="@+id/tvItemTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/ivItemPriority"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@+id/tvItemDueMonth"
-        android:layout_toRightOf="@+id/ivItemPriority"
-        android:layout_toStartOf="@+id/tvItemDueMonth"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivItemPriority"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/unset32" />
 
-    <TextView
-        android:id="@+id/tvItemNotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tvItemTitle"
-        android:layout_below="@id/tvItemTitle"
-        android:layout_toLeftOf="@id/tvItemDueMonth"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/tvItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ivItemPriority"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/tvItemDueMonth"
+            android:layout_toRightOf="@+id/ivItemPriority"
+            android:layout_toStartOf="@+id/tvItemDueMonth"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvItemDueMonth"
-        android:layout_width="60dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tvItemTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/indigo"
-        android:gravity="center"
-        android:textColor="@color/indigo_light"
-        android:textSize="@dimen/abc_text_size_caption_material" />
+        <TextView
+            android:id="@+id/tvItemNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tvItemTitle"
+            android:layout_below="@id/tvItemTitle"
+            android:layout_toLeftOf="@id/tvItemDueMonth"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/tvItemDueDay"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvItemDueMonth"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:textColor="@color/indigo_dark"
-        android:textSize="@dimen/abc_text_size_headline_material" />
+        <TextView
+            android:id="@+id/tvItemDueMonth"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tvItemTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/indigo"
+            android:gravity="center"
+            android:textColor="@color/indigo_light"
+            android:textSize="@dimen/abc_text_size_caption_material" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tvItemDueDay"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvItemDueMonth"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:textColor="@color/indigo_dark"
+            android:textSize="@dimen/abc_text_size_headline_material" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground" />
+
+</FrameLayout>

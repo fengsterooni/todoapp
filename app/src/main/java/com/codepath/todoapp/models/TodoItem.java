@@ -10,20 +10,30 @@ public class TodoItem implements Parcelable {
     private String title;
     private String notes;
     private Date dueDate;
-    private String priority;
+    private Priority priority;
 
     public enum Priority {
-        HIGH ("High"), DEFAULT ("Default"), LOW ("Low");
+        HIGH ("High", 0), DEFAULT ("Default", 1), LOW ("Low", 2);
 
-        private String value;
+        private String stringValue;
+        private int intValue;
 
-        Priority (String sValue) {
-            value = sValue;
+        Priority (String sValue, int iValue) {
+            stringValue = sValue;
+            intValue = iValue;
+        }
+
+        public int getIntValue() {
+            return intValue;
+        }
+
+        public String getStringValue() {
+            return stringValue;
         }
 
         @Override
         public String toString() {
-            return value;
+            return getStringValue();
         }
     }
 
@@ -59,21 +69,25 @@ public class TodoItem implements Parcelable {
         this.dueDate = dueDate;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    public int getPriorityValue() {
+        return priority.getIntValue();
     }
 
     public TodoItem() {
     }
 
-    public TodoItem(String title, String notes, String priority, Date date) {
+    public TodoItem(String title, String notes, int priority, Date date) {
         setTitle(title);
         setNotes(notes);
-        setPriority(priority);
+        this.priority = priority == -1 ? null : Priority.values()[priority];
         setDueDate(date);
     }
 
@@ -88,6 +102,7 @@ public class TodoItem implements Parcelable {
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -99,7 +114,7 @@ public class TodoItem implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.notes);
         dest.writeLong(dueDate != null ? dueDate.getTime() : -1);
-        dest.writeString(this.priority);
+        dest.writeInt(this.priority == null ? -1 : this.priority.ordinal());
     }
 
     private TodoItem(Parcel in) {
@@ -108,7 +123,8 @@ public class TodoItem implements Parcelable {
         this.notes = in.readString();
         long tmpDueDate = in.readLong();
         this.dueDate = tmpDueDate == -1 ? null : new Date(tmpDueDate);
-        this.priority = in.readString();
+        int tmpPriority = in.readInt();
+        this.priority = tmpPriority == -1 ? null : Priority.values()[tmpPriority];
     }
 
     public static final Creator<TodoItem> CREATOR = new Creator<TodoItem>() {

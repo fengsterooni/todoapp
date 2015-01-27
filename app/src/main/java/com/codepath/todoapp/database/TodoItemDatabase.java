@@ -45,7 +45,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_TITLE + " TEXT,"
                 + KEY_NOTE + " TEXT,"
-                + KEY_PRIORITY + " TEXT,"
+                + KEY_PRIORITY + " INTEGER,"
                 + KEY_DATE + " INTEGER"
                 + ")";
         db.execSQL(CREATE_TODO_TABLE);
@@ -72,7 +72,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, item.getTitle());
         values.put(KEY_NOTE, item.getNotes());
-        values.put(KEY_PRIORITY, item.getPriority());
+        values.put(KEY_PRIORITY, item.getPriorityValue());
         values.put(KEY_DATE, DateUtils.getDateLong(item.getDueDate()));
         // Insert Row
         db.insert(TABLE_TODO, null, values);
@@ -91,7 +91,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         // Load result into model object
-        TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+        TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getInt(3),
                 new Date(cursor.getLong(4)));
         item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
         // return todo item
@@ -101,7 +101,8 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
     public ArrayList<TodoItem> getAllTodoItems() {
         ArrayList<TodoItem> todoItems = new ArrayList<TodoItem>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_TODO;
+        // Default sorting order is by Date and Priority
+        String selectQuery = "SELECT  * FROM " + TABLE_TODO + " ORDER BY " + KEY_DATE + ", " + KEY_PRIORITY + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -109,7 +110,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                TodoItem item = new TodoItem(cursor.getString(1), cursor.getString(2), cursor.getInt(3),
                         new Date(cursor.getLong(4)));
 
                 item.setId(cursor.getInt(0));
@@ -139,7 +140,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, item.getTitle());
         values.put(KEY_NOTE, item.getNotes());
-        values.put(KEY_PRIORITY, item.getPriority());
+        values.put(KEY_PRIORITY, item.getPriorityValue());
         values.put(KEY_DATE, DateUtils.getDateLong(item.getDueDate()));
         // Updating row
         int result = db.update(TABLE_TODO, values, KEY_ID + " = ?",
