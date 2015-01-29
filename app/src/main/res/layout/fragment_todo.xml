@@ -4,15 +4,12 @@
     android:layout_height="match_parent"
     tools:context=".TodoActivity">
 
-    <fragment
-        android:id="@+id/fragmentItemsList"
-        android:name="com.codepath.todoapp.fragments.TodoFragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        tools:layout="@layout/fragment_todo_item" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
