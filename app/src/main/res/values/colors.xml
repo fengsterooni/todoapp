@@ -5,4 +5,5 @@
     <color name="indigo_light">#C5CAE9</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="indigo_background">#BBDEFB</color>
 </resources>

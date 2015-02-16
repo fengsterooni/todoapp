@@ -6,14 +6,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="64dp">
 
         <ImageView
             android:id="@+id/ivItemPriority"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
-            android:src="@drawable/unset32" />
+            android:src="@drawable/unset" />
 
         <TextView
             android:id="@+id/tvItemTitle"
@@ -41,8 +41,8 @@
 
         <TextView
             android:id="@+id/tvItemDueMonth"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
+            android:layout_width="48dp"
+            android:layout_height="16dp"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/tvItemTitle"
             android:layout_marginLeft="10dp"
@@ -54,17 +54,17 @@
 
         <TextView
             android:id="@+id/tvItemDueDay"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tvItemDueMonth"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@android:color/white"
+            android:background="@drawable/back"
             android:gravity="center"
             android:textColor="@color/indigo_dark"
-            android:textSize="@dimen/abc_text_size_headline_material" />
+            android:textSize="@dimen/abc_text_size_medium_material" />
 
     </RelativeLayout>
 

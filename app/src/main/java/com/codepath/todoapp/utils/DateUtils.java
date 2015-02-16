@@ -24,6 +24,12 @@ public class DateUtils {
         return month;
     }
 
+    public static String getShortMonthString(Date date){
+        SimpleDateFormat MMMFormat = new SimpleDateFormat("MMM");
+        String month = MMMFormat.format(date);
+        return month;
+    }
+
     public static String getYearString(Date date){
         SimpleDateFormat yyFormat = new SimpleDateFormat("yyyy");
         String dateToString = yyFormat.format(date);

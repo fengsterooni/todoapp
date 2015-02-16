@@ -37,9 +37,9 @@ public class TodoItemFragment extends Fragment {
     private TextView tvDate;
     private Date itemDate;
     private Activity activity;
-    //private String[] string_priority;
-    private int icon_priority[] = { R.drawable.high32,
-            R.drawable.default32, R.drawable.low32};
+
+    private int icon_priority[] = { R.drawable.high,
+            R.drawable.normal, R.drawable.low};
 
     private OnDatePickerClickedListener listener;
 
@@ -75,8 +75,6 @@ public class TodoItemFragment extends Fragment {
         position = getArguments().getInt("position");
         activity = getActivity();
         setHasOptionsMenu(true);
-
-        //string_priority = getResources().getStringArray(R.array.todo_priority);
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.codepath.todoapp.activities.TodoItemActivity;
 import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.database.TodoItemDatabase;
 import com.codepath.todoapp.models.TodoItem;
+import com.codepath.todoapp.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private RecyclerView recyclerView;
     private static final int ITEM_EDIT_REQUEST = 1;
     private static final int ITEM_ADD_REQUEST = 2;
+    public static  final int NOTIFICATION_ID = 1;
     private TodoItemDatabase db;
     private Context context;
 
@@ -66,6 +68,11 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
 
         // Inflate the ListView
         recyclerView.setAdapter(todoAdapter);
+
+        RecyclerView.ItemDecoration itemDecoration =
+                new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
+
         return view;
     }
 

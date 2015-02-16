@@ -9,7 +9,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_margin="10dp"
-        android:src="@drawable/unset32" />
+        android:src="@drawable/unset" />
 
     <TextView
         android:id="@+id/tvPriority"

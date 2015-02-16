@@ -12,6 +12,7 @@ import com.codepath.todoapp.R;
 import com.codepath.todoapp.models.TodoItem;
 import com.codepath.todoapp.utils.DateUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +38,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         viewHolder.setTitle(todoItem.getTitle());
         viewHolder.setNotes(todoItem.getNotes());
         Date date = todoItem.getDueDate();
-        viewHolder.setDueMonth(DateUtils.getMonthString(date));
+        viewHolder.setDueMonth(DateUtils.getShortMonthString(date));
         viewHolder.setDueDay(DateUtils.getDayString(date));
+        Calendar calendar = Calendar.getInstance();
+        if (date.before(calendar.getTime())) {
+            viewHolder.setBackground(R.color.white);
+        }
     }
 
     @Override
@@ -79,16 +84,16 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             int imageId;
             switch (text) {
                 case "High":
-                    imageId = R.drawable.high32;
+                    imageId = R.drawable.high;
                     break;
                 case "Default":
-                    imageId = R.drawable.default32;
+                    imageId = R.drawable.normal;
                     break;
                 case "Low":
-                    imageId = R.drawable.low32;
+                    imageId = R.drawable.low;
                     break;
                 default:
-                    imageId = R.drawable.unset32;
+                    imageId = R.drawable.unset;
             }
             icon.setImageResource(imageId);
         }
@@ -108,5 +113,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         public void setDueDay(CharSequence text) {
             dueDay.setText(text);
         }
+
+        public void setBackground(int color) { parent.setBackgroundResource(color);}
     }
 }
