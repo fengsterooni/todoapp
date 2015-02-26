@@ -33,7 +33,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private RecyclerView recyclerView;
     private static final int ITEM_EDIT_REQUEST = 1;
     private static final int ITEM_ADD_REQUEST = 2;
-    public static  final int NOTIFICATION_ID = 1;
     private TodoItemDatabase db;
     private Context context;
 
