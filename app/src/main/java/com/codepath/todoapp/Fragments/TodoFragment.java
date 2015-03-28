@@ -11,9 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +21,7 @@ import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.database.TodoItemDatabase;
 import com.codepath.todoapp.models.TodoItem;
 import com.codepath.todoapp.utils.DividerItemDecoration;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -35,7 +33,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private static final int ITEM_ADD_REQUEST = 2;
     private TodoItemDatabase db;
     private Context context;
-
     private GestureDetectorCompat gDetector;
 
     @Override
@@ -51,6 +48,15 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.lvItem);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TodoItemActivity.class);
+                startActivityForResult(intent, ITEM_ADD_REQUEST);
+            }
+        });
+        fab.attachToRecyclerView(recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -85,23 +91,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent event) {
         gDetector.onTouchEvent(event);
         return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                Intent intent = new Intent(context, TodoItemActivity.class);
-                startActivityForResult(intent, ITEM_ADD_REQUEST);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_todo, menu);
     }
 
     @Override
