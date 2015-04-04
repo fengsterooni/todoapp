@@ -15,7 +15,9 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [x] Optional: Persist the todo app in SQLite instead of using a text file
 - [x] Optional: Display additional attributes, stylize the items in item ListView
 - [x] Optional: Improved UI by using some simple Material design (need more work!)
-- [ ] Optional: Use a DialogFragment instead of new Activity to support editing items. *This does not apply since both adding new and editing old are implemented sharing the same code, which is already done in Fragment
+- [x] Optional: Use a DialogFragment instead of new Activity to support editing items. 
+	
+	*This does not apply since both adding new and editing old are implemented sharing the same code, which is already done in Fragment
 
 **_Work-in-progress:_**
 
