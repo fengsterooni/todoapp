@@ -26,15 +26,23 @@ import com.codepath.todoapp.utils.DateUtils;
 
 import java.util.Date;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class TodoItemFragment extends Fragment {
 
     private final int DEFAULT_PRIORITY = 1;
     private TodoItem todoItem;
     private int position;
-    private EditText etTitle;
-    private EditText etNotes;
-    private Spinner spPriority;
-    private TextView tvDate;
+    @InjectView(R.id.etTitle) EditText etTitle;
+    @InjectView(R.id.etNotes) EditText etNotes;
+    @InjectView(R.id.spPriority) Spinner spPriority;
+    @InjectView(R.id.tvDate) TextView tvDate;
+    @OnClick(R.id.tvDate) void click(View v) {
+        listener.onDatePickerClicked(v);
+    }
+
     private Date itemDate;
     private Activity activity;
 
@@ -82,17 +90,7 @@ public class TodoItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo_item, container, false);
-
-        etTitle = (EditText) view.findViewById(R.id.etTitle);
-        etNotes = (EditText) view.findViewById(R.id.etNotes);
-        spPriority = (Spinner) view.findViewById(R.id.spPriority);
-        tvDate = (TextView) view.findViewById(R.id.tvDate);
-        tvDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onDatePickerClicked(v);
-            }
-        });
+        ButterKnife.inject(this, view);
 
         populateSpinner();
 
@@ -116,15 +114,16 @@ public class TodoItemFragment extends Fragment {
 
         etTitle.setText(todoItem.getTitle());
         String notes = todoItem.getNotes();
-        if (!TextUtils.isEmpty(notes))
+        if (!TextUtils.isEmpty(notes)) {
             etNotes.setText(notes);
-
+        }
         spPriority.setSelection(todoItem.getPriorityValue());
 
         itemDate = todoItem.getDueDate();
         String date = DateUtils.getDateString(itemDate);
-        if (!TextUtils.isEmpty(date))
+        if (!TextUtils.isEmpty(date)) {
             tvDate.setText(date);
+        }
     }
 
     public TodoItem prepareTodoItem() {
@@ -200,11 +199,12 @@ public class TodoItemFragment extends Fragment {
     }
 
     public interface OnDatePickerClickedListener {
-        public void onDatePickerClicked(View view);
+        void onDatePickerClicked(View view);
     }
 
     public class MySpinnerAdapter extends ArrayAdapter<TodoItem.Priority> {
-
+        @InjectView(R.id.tvPriority) TextView label;
+        @InjectView(R.id.ivPriority) ImageView icon;
 
         public MySpinnerAdapter(Context context, TodoItem.Priority[] objects) {
             super(context, R.layout.priority_item, objects);
@@ -224,10 +224,8 @@ public class TodoItemFragment extends Fragment {
 
             LayoutInflater inflater=getActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.priority_item, parent, false);
-            TextView label = (TextView)view.findViewById(R.id.tvPriority);
+            ButterKnife.inject(this, view);
             label.setText(TodoItem.Priority.values()[position].toString());
-
-            ImageView icon=(ImageView)view.findViewById(R.id.ivPriority);
             icon.setImageResource(icon_priority[position]);
 
             return view;

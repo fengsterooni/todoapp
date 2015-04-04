@@ -25,10 +25,20 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchListener {
     private ArrayList<TodoItem> todoItems;
     private TodoAdapter todoAdapter;
-    private RecyclerView recyclerView;
+    @InjectView(R.id.lvItem) RecyclerView recyclerView;
+    @InjectView(R.id.fab)
+    FloatingActionButton fab;
+    @OnClick(R.id.fab) void click() {
+        Intent intent = new Intent(context, TodoItemActivity.class);
+        startActivityForResult(intent, ITEM_ADD_REQUEST);
+    }
     private static final int ITEM_EDIT_REQUEST = 1;
     private static final int ITEM_ADD_REQUEST = 2;
     private TodoItemDatabase db;
@@ -46,20 +56,13 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
+        ButterKnife.inject(this, view);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.lvItem);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TodoItemActivity.class);
-                startActivityForResult(intent, ITEM_ADD_REQUEST);
-            }
-        });
         fab.attachToRecyclerView(recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.addOnItemTouchListener(this);
 
         gDetector = new GestureDetectorCompat(context, new RecyclerViewGestureListener());

@@ -16,6 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private List<TodoItem> todoItems;
@@ -28,7 +31,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         Context context = viewGroup.getContext();
         View parent = LayoutInflater.from(context).inflate(R.layout.item_todo, viewGroup, false);
-        return ViewHolder.newInstance(parent);
+        return new ViewHolder(parent);
     }
 
     @Override
@@ -51,33 +54,18 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         return todoItems.size();
     }
 
-    public static final class ViewHolder extends RecyclerView.ViewHolder {
-        private final View parent;
-        private final ImageView icon;
-        private final TextView title;
-        private final TextView notes;
-        private final TextView dueMonth;
-        private final TextView dueDay;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        View root;
+        @InjectView(R.id.ivItemPriority) ImageView icon;
+        @InjectView(R.id.tvItemTitle) TextView title;
+        @InjectView(R.id.tvItemNotes) TextView notes;
+        @InjectView(R.id.tvItemDueMonth) TextView dueMonth;
+        @InjectView(R.id.tvItemDueDay) TextView dueDay;
 
-        public static ViewHolder newInstance(View parent) {
-            ImageView icon = (ImageView) parent.findViewById(R.id.ivItemPriority);
-            TextView title = (TextView) parent.findViewById(R.id.tvItemTitle);
-            TextView notes = (TextView) parent.findViewById(R.id.tvItemNotes);
-            TextView dueMonth = (TextView) parent.findViewById(R.id.tvItemDueMonth);
-            TextView dueDay = (TextView) parent.findViewById(R.id.tvItemDueDay);
-
-            return new ViewHolder(parent, icon, title, notes, dueMonth, dueDay);
-        }
-
-        private ViewHolder(View parent, ImageView icon,
-                           TextView title, TextView notes, TextView dueMonth, TextView dueDay) {
+        public ViewHolder(View parent) {
             super(parent);
-            this.parent = parent;
-            this.icon = icon;
-            this.title = title;
-            this.notes = notes;
-            this.dueMonth = dueMonth;
-            this.dueDay = dueDay;
+            root = parent;
+            ButterKnife.inject(this, parent);
         }
 
         public void setIcon(String text) {
@@ -114,6 +102,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             dueDay.setText(text);
         }
 
-        public void setBackground(int color) { parent.setBackgroundResource(color);}
+        public void setBackground(int color) { root.setBackgroundResource(color);}
     }
 }
