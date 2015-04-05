@@ -136,9 +136,10 @@ public class TodoItemFragment extends Fragment {
         }
 
         String notes = etNotes.getText().toString();
-        if (!TextUtils.isEmpty(notes)) {
-            todoItem.setNotes(notes);
+        if (TextUtils.isEmpty(notes)) {
+            notes = "";
         }
+        todoItem.setNotes(notes);
 
         int index = spPriority.getSelectedItemPosition();
         todoItem.setPriority(TodoItem.Priority.values()[index]);
