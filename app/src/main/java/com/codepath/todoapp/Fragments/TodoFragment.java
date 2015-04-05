@@ -142,12 +142,21 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
             View view = recyclerView.findChildViewUnder(e1.getX(), e1.getY());
             int position = recyclerView.getChildPosition(view);
             if (position < 0) return false;
-            TodoItem todoItem = todoItems.get(position);
-            todoItems.remove(position);
-            todoAdapter.notifyDataSetChanged();
+            try {
+                float diffY = e2.getY() - e1.getY();
+                float diffX = e2.getX() - e1.getX();
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    TodoItem todoItem = todoItems.get(position);
+                    todoItems.remove(position);
+                    todoAdapter.notifyDataSetChanged();
 
-            // Update the Database
-            db.deleteTodoItem(todoItem);
+                    // Update the Database
+                    db.deleteTodoItem(todoItem);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return super.onFling(e1, e2, velocityX, velocityY);
         }
 

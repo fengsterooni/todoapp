@@ -30,7 +30,7 @@
                 android:layout_toStartOf="@+id/tvItemDueMonth"
                 android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold" />
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tvItemNotes"
