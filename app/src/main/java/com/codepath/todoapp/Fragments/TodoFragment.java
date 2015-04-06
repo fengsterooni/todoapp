@@ -24,7 +24,6 @@ import com.codepath.todoapp.activities.TodoItemActivity;
 import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.database.TodoItemDatabase;
 import com.codepath.todoapp.models.TodoItem;
-import com.codepath.todoapp.utils.DividerItemDecoration;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -52,6 +51,18 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private TodoItemDatabase db;
     private Context context;
     private GestureDetectorCompat gDetector;
+
+
+    public TodoFragment() {
+        // Required empty public constructor
+    }
+
+    public static TodoFragment newInstatnce() {
+        TodoFragment fragment = new TodoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,10 +97,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
 
         // Inflate the ListView
         recyclerView.setAdapter(todoAdapter);
-
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
 
         return view;
     }
