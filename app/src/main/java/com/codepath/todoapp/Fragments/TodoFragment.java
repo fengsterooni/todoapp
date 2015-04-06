@@ -1,11 +1,14 @@
 package com.codepath.todoapp.fragments;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.todoapp.R;
+import com.codepath.todoapp.activities.TodoActivity;
 import com.codepath.todoapp.activities.TodoItemActivity;
 import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.database.TodoItemDatabase;
@@ -24,12 +28,16 @@ import com.codepath.todoapp.utils.DividerItemDecoration;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchListener {
+    private int REMINDER = 1;
+    private int NOTIFICATION_ID = 1;
     private ArrayList<TodoItem> todoItems;
     private TodoAdapter todoAdapter;
     @InjectView(R.id.lvItem) RecyclerView recyclerView;
@@ -74,6 +82,8 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         todoItems = db.getAllTodoItems();
         todoAdapter = new TodoAdapter(todoItems);
 
+        checkForNotification();
+
         // Inflate the ListView
         recyclerView.setAdapter(todoAdapter);
 
@@ -82,6 +92,36 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         recyclerView.addItemDecoration(itemDecoration);
 
         return view;
+    }
+
+    private void checkForNotification() {
+        if (todoItems.isEmpty())
+            return;
+
+        TodoItem todoItem = todoItems.get(0);
+        Date date = todoItem.getDueDate();
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, REMINDER);
+        if (temp.before(calendar)) {
+
+            Intent intent = new Intent(context, TodoActivity.class);
+            int requestID = (int) System.currentTimeMillis();
+            int flags = PendingIntent.FLAG_CANCEL_CURRENT;
+            PendingIntent pIntent = PendingIntent.getActivity(context, requestID, intent, flags);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_stat_notify)
+                    .setContentTitle("Task is due")
+                    .setContentText("DO something about it!")
+                    .setContentIntent(pIntent);
+
+            builder.setAutoCancel(true);
+
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(NOTIFICATION_ID, builder.build());
+        }
     }
 
     @Override
@@ -117,6 +157,7 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
                 todoItems.addAll(db.getAllTodoItems());
                 todoAdapter.notifyDataSetChanged();
             }
+            checkForNotification();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
