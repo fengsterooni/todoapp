@@ -14,9 +14,6 @@ import com.codepath.todoapp.fragments.TodoPrefFragment;
 
 public class TodoActivity extends ActionBarActivity {
     private static final String TAG = TodoActivity.class.getSimpleName();
-    private static final String PREF_NOTIFICATION = "switch_preference";
-    private static final String PREF_REMINDER = "list_preference";
-
     TodoFragment fragment;
     FragmentTransaction fragmentTransaction;
 
@@ -31,6 +28,7 @@ public class TodoActivity extends ActionBarActivity {
             fragment = TodoFragment.newInstatnce();
             fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fListContainer, fragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
     }

@@ -14,7 +14,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -102,11 +101,8 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         enable = preferences.getBoolean("switch_preference", true);
         if (enable) {
-            String value = preferences.getString("list_preference", "1");
+            String value = preferences.getString("list_preference", "0");
             REMINDER = Integer.valueOf(value);
-
-            Log.i("INFO", "VALUE ENABLED");
-            Log.i("INFO", "VALUE of REMINDER: " + REMINDER);
             checkForNotification();
         }
 
@@ -127,7 +123,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, REMINDER);
         if (temp.before(calendar)) {
-
             Intent intent = new Intent(context, TodoActivity.class);
             int requestID = (int) System.currentTimeMillis();
             int flags = PendingIntent.FLAG_CANCEL_CURRENT;

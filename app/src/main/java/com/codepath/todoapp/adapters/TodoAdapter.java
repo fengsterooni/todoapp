@@ -1,6 +1,9 @@
 package com.codepath.todoapp.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,10 @@ import butterknife.InjectView;
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private List<TodoItem> todoItems;
+    SharedPreferences preferences;
+    boolean enable;
+    int REMINDER;
+    Resources resources;
 
     public TodoAdapter(List<TodoItem> objects) {
         this.todoItems = objects;
@@ -31,6 +38,13 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         Context context = viewGroup.getContext();
         View parent = LayoutInflater.from(context).inflate(R.layout.item_todo, viewGroup, false);
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        enable = preferences.getBoolean("switch_preference", true);
+        if (enable) {
+            String value = preferences.getString("list_preference", "0");
+            REMINDER = Integer.valueOf(value);
+        }
+        resources = context.getResources();
         return new ViewHolder(parent);
     }
 
@@ -38,15 +52,23 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         final TodoItem todoItem = todoItems.get(position);
         viewHolder.setIcon(todoItem.getPriority().toString());
-        viewHolder.setTitle(todoItem.getTitle());
         viewHolder.setNotes(todoItem.getNotes());
         Date date = todoItem.getDueDate();
         viewHolder.setDueMonth(DateUtils.getShortMonthString(date));
         viewHolder.setDueDay(DateUtils.getDayString(date));
         Calendar calendar = Calendar.getInstance();
-        if (date.before(calendar.getTime())) {
-            viewHolder.setBackground(R.color.white);
+
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(date);
+
+        calendar.add(Calendar.DATE, REMINDER);
+        if (temp.before(calendar)) {
+            if (enable) {
+                // viewHolder.setTitleColor(getResource().getColor(R.color.red));
+                viewHolder.setTitleColor(resources.getColor(R.color.red));
+            }
         }
+        viewHolder.setTitle(todoItem.getTitle());
     }
 
     @Override
@@ -102,6 +124,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             dueDay.setText(text);
         }
 
-        public void setBackground(int color) { root.setBackgroundResource(color);}
+        public void setTitleColor(int color) { title.setTextColor(color);}
     }
 }

@@ -21,5 +21,6 @@
 
     <string name="summary_list_preference">An example that uses a list dialog</string>
     <string name="dialog_title_list_preference">Remind me</string>
-    <string name="pref_remminder_default">1 day</string>
+    <string name="pref_reminder_default">1 day</string>
+    <string name="pref_reminder_default_value">0</string>
 </resources>

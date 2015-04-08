@@ -32,13 +32,21 @@ public class TodoPrefFragment extends PreferenceFragment {
         }
 
         listPreference = (ListPreference) preferenceManager.findPreference("list_preference");
-
+        /*
         String reminder = preferenceManager.getSharedPreferences().getString("list_preference", "NULL");
 
+        String remin = listPreference.getValue();
+        CharSequence cs = listPreference.getEntry();
+        CharSequence[] cc = listPreference.getEntryValues();
+        CharSequence[] ss = listPreference.getEntries();
         int value = listPreference.findIndexOfValue(reminder);
 
         if (value >=0)
             listPreference.setSummary(listPreference.getEntries()[value]);
+
+        listPreference.setSummary(reminder);
+        */
+        listPreference.setSummary(listPreference.getEntry());
 
         listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

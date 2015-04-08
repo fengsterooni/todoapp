@@ -13,10 +13,10 @@
             android:key="list_preference"
             android:title="@string/pref_title_reminder"
             android:dependency="switch_preference"
-            android:summary="@string/pref_remminder_default"
+            android:summary="@string/pref_reminder_default"
             android:entries="@array/pref_reminder_string"
             android:entryValues="@array/pref_reminder_values"
-            android:defaultValue="@string/pref_remminder_default"
+            android:defaultValue="@string/pref_reminder_default_value"
             android:dialogTitle="@string/dialog_title_list_preference" />
 
     </PreferenceCategory>
