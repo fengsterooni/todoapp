@@ -15,21 +15,28 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [x] Optional: Persist the todo app in SQLite instead of using a text file
 - [x] Optional: Display additional attributes, stylize the items in item ListView
 - [x] Optional: Improved UI by using some simple material design
-- [x] Optional: Use a DialogFragment instead of new Activity to support editing items. 
-	
-  #### Note:
+- [x] Optional: Use a DialogFragment instead of new Activity to support editing items.
+#### Note:
 	Both adding new and editing existing items are implemented by sharing the same code, in Fragment
-- Used ButterKnife Library
+	
+- [x] Enhancement: Used ButterKnife Library
+
+**_New Enhancements:_**
+
+- [x] Enhancement: User preferences. User can enable/disable notification, and setting the reminder time for notification
+- [x] Enhancement: Notification. When enabled, user will get notification that due days are approaching for the todo items.
+
+
 
 **_Work-in-progress:_**
 
 - [ ] Further improve UI. 
 - [ ] More material design!
 
-**_Further improvements:_**
-
-- [ ] User preferences. User shall be able to hide lower priority items
-- [ ] Notification. User shall be able to set and get notification if due date(s) is/are approaching
 
 **_Screencast:_**
+
 ![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp.gif)
+
+
+![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp2.gif)
