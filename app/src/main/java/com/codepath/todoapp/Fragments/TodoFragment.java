@@ -40,14 +40,19 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private int REMINDER = 1;
     private int NOTIFICATION_ID = 1;
     private ArrayList<TodoItem> todoItems;
+    private ArrayList<TodoItem> reminderItems = new ArrayList<>();
     private TodoAdapter todoAdapter;
-    @InjectView(R.id.lvItem) RecyclerView recyclerView;
+    @InjectView(R.id.lvItem)
+    RecyclerView recyclerView;
     @InjectView(R.id.fab)
     FloatingActionButton fab;
-    @OnClick(R.id.fab) void click() {
+
+    @OnClick(R.id.fab)
+    void click() {
         Intent intent = new Intent(context, TodoItemActivity.class);
         startActivityForResult(intent, ITEM_ADD_REQUEST);
     }
+
     private static final int ITEM_EDIT_REQUEST = 1;
     private static final int ITEM_ADD_REQUEST = 2;
     private TodoItemDatabase db;
@@ -116,13 +121,20 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         if (todoItems.isEmpty())
             return;
 
-        TodoItem todoItem = todoItems.get(0);
-        Date date = todoItem.getDueDate();
-        Calendar temp = Calendar.getInstance();
-        temp.setTime(date);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, REMINDER);
-        if (temp.before(calendar)) {
+        reminderItems.clear();
+
+        for (TodoItem todoItem : todoItems) {
+            Date date = todoItem.getDueDate();
+            Calendar temp = Calendar.getInstance();
+            temp.setTime(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, REMINDER);
+            if (temp.before(calendar)) {
+                reminderItems.add(todoItem);
+            }
+        }
+
+        if (!reminderItems.isEmpty()) {
             Intent intent = new Intent(context, TodoActivity.class);
             int requestID = (int) System.currentTimeMillis();
             int flags = PendingIntent.FLAG_CANCEL_CURRENT;
@@ -174,6 +186,9 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
                 todoItems.addAll(db.getAllTodoItems());
                 todoAdapter.notifyDataSetChanged();
             }
+
+            if (manager != null)
+                manager.cancelAll();
 
             if (enable)
                 checkForNotification();
