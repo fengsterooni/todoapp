@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Notifications -->
+    <!-- Head -->
+    <string name="pref_header_notifications">Notification</string>
+    <!-- Title -->
+    <string name="pref_title_notification">Reminder</string>
+
+    <string name="pref_title_reminder">Time before due date</string>
+
+    <string-array name="pref_reminder_string">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>1 week</item>
+    </string-array>
+    <string-array name="pref_reminder_values">
+        <item>1</item>
+        <item>2</item>
+        <item>7</item>
+    </string-array>
+
+    <string name="summary_list_preference">An example that uses a list dialog</string>
+    <string name="dialog_title_list_preference">Remind me</string>
+    <string name="pref_remminder_default">1 day</string>
+</resources>

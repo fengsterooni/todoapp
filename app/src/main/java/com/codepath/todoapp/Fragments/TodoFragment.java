@@ -1,17 +1,20 @@
 package com.codepath.todoapp.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -51,6 +54,9 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private TodoItemDatabase db;
     private Context context;
     private GestureDetectorCompat gDetector;
+    private SharedPreferences preferences;
+    private boolean enable;
+    private NotificationManager manager;
 
 
     public TodoFragment() {
@@ -93,7 +99,16 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         todoItems = db.getAllTodoItems();
         todoAdapter = new TodoAdapter(todoItems);
 
-        checkForNotification();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        enable = preferences.getBoolean("switch_preference", true);
+        if (enable) {
+            String value = preferences.getString("list_preference", "1");
+            REMINDER = Integer.valueOf(value);
+
+            Log.i("INFO", "VALUE ENABLED");
+            Log.i("INFO", "VALUE of REMINDER: " + REMINDER);
+            checkForNotification();
+        }
 
         // Inflate the ListView
         recyclerView.setAdapter(todoAdapter);
@@ -126,7 +141,7 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
 
             builder.setAutoCancel(true);
 
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(NOTIFICATION_ID, builder.build());
         }
     }
@@ -164,7 +179,9 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
                 todoItems.addAll(db.getAllTodoItems());
                 todoAdapter.notifyDataSetChanged();
             }
-            checkForNotification();
+
+            if (enable)
+                checkForNotification();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

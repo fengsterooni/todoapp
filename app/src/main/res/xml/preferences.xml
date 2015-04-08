@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="@string/pref_header_notifications">
+
+        <SwitchPreference
+            android:key="switch_preference"
+            android:title="@string/pref_title_notification"
+            android:defaultValue="true"/>
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="@string/pref_title_reminder"
+            android:dependency="switch_preference"
+            android:summary="@string/pref_remminder_default"
+            android:entries="@array/pref_reminder_string"
+            android:entryValues="@array/pref_reminder_values"
+            android:defaultValue="@string/pref_remminder_default"
+            android:dialogTitle="@string/dialog_title_list_preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
