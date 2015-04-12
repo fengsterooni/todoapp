@@ -16,10 +16,11 @@ This is an Android application for creating, editing and saving a ToDo list.
 - [x] Optional: Display additional attributes, stylize the items in item ListView
 - [x] Optional: Improved UI by using some simple material design
 - [x] Optional: Use a DialogFragment instead of new Activity to support editing items.
-#### Note:
+#####Note:
 	Both adding new and editing existing items are implemented by sharing the same code, in Fragment
 	
 - [x] Enhancement: Used ButterKnife Library
+- [x] Enhancement: Used MaterialEditText Library
 
 **_New Enhancements:_**
 
@@ -37,6 +38,3 @@ This is an Android application for creating, editing and saving a ToDo list.
 **_Screencast:_**
 
 ![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp.gif)
-
-
-![screenshot](https://github.com/fengsterooni/todoapp/blob/master/todoapp2.gif)
