@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.codepath.todoapp.R;
 import com.codepath.todoapp.activities.TodoActivity;
@@ -27,6 +29,7 @@ import com.codepath.todoapp.activities.TodoItemActivity;
 import com.codepath.todoapp.adapters.TodoAdapter;
 import com.codepath.todoapp.database.TodoItemDatabase;
 import com.codepath.todoapp.models.TodoItem;
+import com.jensdriller.libs.undobar.UndoBar;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -62,7 +65,6 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
     private SharedPreferences preferences;
     private boolean enable;
     private NotificationManager manager;
-
 
     public TodoFragment() {
         // Required empty public constructor
@@ -223,12 +225,7 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    TodoItem todoItem = todoItems.get(position);
-                    todoItems.remove(position);
-                    todoAdapter.notifyDataSetChanged();
-
-                    // Update the Database
-                    db.deleteTodoItem(todoItem);
+                    removeItem(position);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -242,13 +239,38 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
             View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
             int position = recyclerView.getChildPosition(view);
             if (position < 0) return;
-            TodoItem todoItem = todoItems.get(position);
-            todoItems.remove(position);
-            todoAdapter.notifyDataSetChanged();
-
-            // Update the Database
-            db.deleteTodoItem(todoItem);
+                removeItem(position);
             super.onLongPress(e);
         }
     }
+
+    public void removeItem(final int position) {
+        final TodoItem todoItem = todoItems.get(position);
+        String title = todoItem.getTitle();
+        todoItems.remove(position);
+        todoAdapter.notifyDataSetChanged();
+
+        new UndoBar.Builder(getActivity())//
+                .setMessage("Item \"" + title + "\"" + " deleted.")//
+                .setListener(new UndoBar.Listener() {
+                    @Override
+                    public void onHide() {
+                        Toast.makeText(context, "NO SELECTION", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onUndo(Parcelable parcelable) {
+                        Toast.makeText(context, "UNDO SELECTED", Toast.LENGTH_SHORT).show();
+                        todoItems.add(position, todoItem);
+                        todoAdapter.notifyDataSetChanged();
+                    }
+                })//
+                .setStyle(UndoBar.Style.LOLLIPOP)//
+                .show();
+
+        // Update the Database
+        db.deleteTodoItem(todoItem);
+    }
+
+
 }
