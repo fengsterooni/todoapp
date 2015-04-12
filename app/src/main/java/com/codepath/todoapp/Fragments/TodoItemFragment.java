@@ -129,7 +129,8 @@ public class TodoItemFragment extends Fragment {
     public TodoItem prepareTodoItem() {
         String title = etTitle.getText().toString();
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(activity, "Please add a title!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity, "Please add a title!", Toast.LENGTH_SHORT).show();
+            etTitle.setError("Please add a title!");
             return null;
         } else {
             todoItem.setTitle(title);

@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -93,6 +94,7 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.addOnItemTouchListener(this);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         gDetector = new GestureDetectorCompat(context, new RecyclerViewGestureListener());
 

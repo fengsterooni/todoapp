@@ -1,5 +1,6 @@
 package com.codepath.todoapp.activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -25,7 +26,7 @@ public class TodoActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             fragment = TodoFragment.newInstatnce();
             getFragmentManager().beginTransaction()
-                                .add(R.id.fListContainer, fragment)
+                                .replace(R.id.fListContainer, fragment, "todo")
                                 .addToBackStack("todo")
                                 .commit();
         }
@@ -45,12 +46,28 @@ public class TodoActivity extends ActionBarActivity {
 
         if (id == R.id.action_settings) {
             getFragmentManager().beginTransaction()
-                                .replace(R.id.fListContainer, new TodoPrefFragment())
+                                .replace(R.id.fListContainer, new TodoPrefFragment(), "pref")
                                 .addToBackStack("pref")
                                 .commit();
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment prefFragment = getFragmentManager().findFragmentByTag("pref");
+
+        if (prefFragment != null) {
+            fragment = TodoFragment.newInstatnce();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fListContainer, fragment, "todo")
+                    .addToBackStack("todo")
+                    .commit();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
 }

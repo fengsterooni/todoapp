@@ -1,5 +1,7 @@
 package com.codepath.todoapp.fragments;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -28,6 +30,20 @@ public class TodoPrefFragment extends PreferenceFragment {
         } else {
             switchPreference.setChecked(false);
         }
+
+        switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (newValue == Boolean.FALSE) {
+
+                    NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                    manager.cancelAll();
+                }
+
+                return true;
+            }
+        });
 
         listPreference = (ListPreference) preferenceManager.findPreference("list_preference");
         listPreference.setSummary(listPreference.getEntry());
