@@ -8,8 +8,8 @@
     <string name="title_hint">Title</string>
     <string name="notes_hint">Notes (Optional)</string>
     <string name="date_hint">Pick a Date</string>
-    <string name="label_priority">PRIORITY</string>
-    <string name="label_due_date">DUE DATE</string>
+    <string name="label_priority">Priority</string>
+    <string name="label_due_date">Due Date</string>
     <string name="action_done">Done</string>
     <string name="action_cancel">Cancel</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

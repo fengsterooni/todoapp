@@ -251,26 +251,25 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
         todoAdapter.notifyDataSetChanged();
 
         new UndoBar.Builder(getActivity())//
-                .setMessage("Item \"" + title + "\"" + " deleted.")//
+                .setMessage("\"" + title + "\"" + " deleted.")//
                 .setListener(new UndoBar.Listener() {
                     @Override
                     public void onHide() {
-                        Toast.makeText(context, "NO SELECTION", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "ITEM DELETED", Toast.LENGTH_SHORT).show();
+
+                        // Update the Database
+                        db.deleteTodoItem(todoItem);
                     }
 
                     @Override
                     public void onUndo(Parcelable parcelable) {
-                        Toast.makeText(context, "UNDO SELECTED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "ITEM RECOVERED", Toast.LENGTH_SHORT).show();
                         todoItems.add(position, todoItem);
                         todoAdapter.notifyDataSetChanged();
                     }
                 })//
                 .setStyle(UndoBar.Style.LOLLIPOP)//
                 .show();
-
-        // Update the Database
-        db.deleteTodoItem(todoItem);
     }
-
 
 }

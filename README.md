@@ -19,20 +19,29 @@ This is an Android application for creating, editing and saving a ToDo list.
 #####Note:
 	Both adding new and editing existing items are implemented by sharing the same code, in Fragment
 	
-- [x] Enhancement: Used ButterKnife Library
-- [x] Enhancement: Used MaterialEditText Library
+
 
 **_New Enhancements:_**
 
-- [x] Enhancement: User preferences. User can enable/disable notification, and setting the reminder time for notification
-- [x] Enhancement: Notification. When enabled, user will get notification that due days are approaching for the todo items.
-
+- [x] Added Floating Action Button (FAB)
+- [x] Added notification. When enabled, user shall get notification that due days are approaching for the items in the list.
+- [x] Added user settings (preferenceFragment). User can enable/disable notification, and set the reminder time for notification via Settings
+- [x] Added UndoBar
+- [x] Used MaterialEditText Library to implement the floating label, empty title check, etc.
 
 
 **_Work-in-progress:_**
 
-- [ ] Further improve UI. 
-- [ ] More material design!
+- [ ] Further UI improvement
+
+
+**_Library used:_**
+
+- Floating Action Button (https://github.com/makovkastar/FloatingActionButton)
+- ButterKnife (https://github.com/JakeWharton/butterknife)
+- UndoBar (https://github.com/jenzz/Android-UndoBar)
+- MaterialEditText (https://github.com/rengwuxian/MaterialEditText)
+
 
 
 **_Screencast:_**
