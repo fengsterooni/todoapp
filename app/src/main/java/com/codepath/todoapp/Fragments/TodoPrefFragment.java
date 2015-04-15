@@ -17,7 +17,6 @@ public class TodoPrefFragment extends PreferenceFragment
     private static final String KEY_LIST_PREFERENCE = "list_preference";
     private static final String KEY_SWITCH_PREFERENCE = "switch_preference";
     private ListPreference listPreference;
-    private SwitchPreference switchPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +27,7 @@ public class TodoPrefFragment extends PreferenceFragment
 
 
     public void setupPreferences() {
+        SwitchPreference switchPreference;
         PreferenceManager preferenceManager = getPreferenceManager();
         switchPreference = (SwitchPreference) preferenceManager.findPreference(KEY_SWITCH_PREFERENCE);
         if (preferenceManager.getSharedPreferences().getBoolean(KEY_SWITCH_PREFERENCE, true)) {

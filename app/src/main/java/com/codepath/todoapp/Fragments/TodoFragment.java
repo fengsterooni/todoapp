@@ -127,13 +127,16 @@ public class TodoFragment extends Fragment implements RecyclerView.OnItemTouchLi
 
         reminderItems.clear();
 
+        Date dueDate;
+        Calendar reminderDate, itemDueDate;
+
         for (TodoItem todoItem : todoItems) {
-            Date date = todoItem.getDueDate();
-            Calendar temp = Calendar.getInstance();
-            temp.setTime(date);
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, REMINDER);
-            if (temp.before(calendar)) {
+            dueDate = todoItem.getDueDate();
+            itemDueDate = Calendar.getInstance();
+            itemDueDate.setTime(dueDate);
+            reminderDate = Calendar.getInstance();
+            reminderDate.add(Calendar.DATE, REMINDER);
+            if (itemDueDate.before(reminderDate)) {
                 reminderItems.add(todoItem);
             }
         }

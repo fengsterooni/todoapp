@@ -25,7 +25,6 @@ import butterknife.InjectView;
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private List<TodoItem> todoItems;
-    SharedPreferences preferences;
     boolean enable;
     int REMINDER;
     Resources resources;
@@ -36,6 +35,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
+        SharedPreferences preferences;
         Context context = viewGroup.getContext();
         View parent = LayoutInflater.from(context).inflate(R.layout.item_todo, viewGroup, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -51,23 +51,27 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         final TodoItem todoItem = todoItems.get(position);
+        Date dueDate;
+        Calendar reminderDate, itemDueDate;
+
         viewHolder.setIcon(todoItem.getPriority().toString());
         viewHolder.setNotes(todoItem.getNotes());
-        Date date = todoItem.getDueDate();
-        viewHolder.setDueMonth(DateUtils.getShortMonthString(date));
-        viewHolder.setDueDay(DateUtils.getDayString(date));
-        Calendar calendar = Calendar.getInstance();
 
-        Calendar temp = Calendar.getInstance();
-        temp.setTime(date);
+        dueDate = todoItem.getDueDate();
+        viewHolder.setDueMonth(DateUtils.getShortMonthString(dueDate));
+        viewHolder.setDueDay(DateUtils.getDayString(dueDate));
 
-        calendar.add(Calendar.DATE, REMINDER);
-        if (temp.before(calendar)) {
+        reminderDate = Calendar.getInstance();
+        itemDueDate = Calendar.getInstance();
+        itemDueDate.setTime(dueDate);
+        reminderDate.add(Calendar.DATE, REMINDER);
+        if (itemDueDate.before(reminderDate)) {
             if (enable) {
                 // viewHolder.setTitleColor(getResource().getColor(R.color.red));
                 viewHolder.setTitleColor(resources.getColor(R.color.red));
             }
         }
+
         viewHolder.setTitle(todoItem.getTitle());
     }
 
